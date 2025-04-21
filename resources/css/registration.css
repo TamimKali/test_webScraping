@@ -1,0 +1,21 @@
+body{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+}
+.main_bg{
+    display: flex;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+    opacity: 0.8;
+    background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #000000 15px ), repeating-linear-gradient( #444cf755, #444cf7 );
+    transform: scale(105%);
+    overflow: hidden;
+}
+

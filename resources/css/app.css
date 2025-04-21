@@ -1,0 +1,64 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/*main nav style */
+.main_nav{
+    display: flex;
+    width: 100vw;
+    height: 130px;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(180, 101, 101);
+}
+
+/*main nav style end*/
+
+/*main content style*/
+/*content title style*/
+.title_body{
+    width: 100vw;
+    height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px black solid;
+}
+
+/*logo scrolling style*/
+
+.logo_scroll{
+    width: 100vw;
+    height: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px black solid;
+}
+
+/*main logo space*/
+.logo_marketplace_container{
+    width: 640px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   /* border: 1px black solid;*/
+    overflow: hidden;
+
+}
+
+/*main logo size*/
+.logo_marketplace{
+    width: 120px;
+    height: 40px;
+}
+/*main content style finished*/
