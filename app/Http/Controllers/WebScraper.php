@@ -48,9 +48,15 @@ class WebScraper extends Controller
                             //$title_product = "Title not found!";
                         }
 
-                        try { // get the offer price percentage and original price, if there is, index 1 if null, no discount
-                            $all_info[] = $crawler->filter('span.savingsPercentage')->text();
-                            $all_info[] =  $crawler->filter('span.basisPrice > span > span.a-offscreen')->text();
+                        try { // check if it's a limited time offer, index 1
+                            $all_info[] = $crawler->filter('span#dealBadgeSupportingText')->text();
+                        } catch (\InvalidArgumentException $e) {
+                            $all_info[] = null;
+                        }
+
+                        try { // get the offer price percentage and original price, if there is, index 2 if null, no discount
+                            $all_info[] = $crawler->filter('span.savingsPercentage')->text(); //percentage of discount
+                            $all_info[] =  $crawler->filter('span.basisPrice > span > span.a-offscreen')->text(); //original price before discount
                             //$price_discount_percentage = $crawler->filter('span.savingsPercentage')->text();
                             //$price_discount = $crawler->filter('span.basisPrice > span > span.a-offscreen')->text();
                         } catch (\InvalidArgumentException $e) {
@@ -59,8 +65,8 @@ class WebScraper extends Controller
                             //$price_discount = "No discount";
                         }
 
-                        try { // get the actual price of the product, index 2 if no discount, index 3 if discount
-                            $all_info[] = $crawler->filter('span.a-price.aok-align-center > .a-offscreen')->text();
+                        try { // get the actual price of the product, index 3 if no discount, index 4 if discount
+                            $all_info[] = $crawler->filter('span.a-price.aok-align-center > .a-offscreen')->text(); //actual price
                             //$price_product = $crawler->filter('span.a-price.aok-align-center > .a-offscreen')->text();
                         } catch (\InvalidArgumentException $e) {
                             $all_info[] = null;
