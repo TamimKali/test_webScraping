@@ -72,6 +72,22 @@ class WebScraper extends Controller
                             $all_info[] = null;
                             //$price_product = "Price not found!";
                         }
+
+                        try { // get the picture of the product, index 4 if no discount, index 5 if discount
+                            $all_info[] = $crawler->filter('img#landingImage')->attr('src'); //actual price
+                            //$price_product = $crawler->filter('span.a-price.aok-align-center > .a-offscreen')->text();
+                        } catch (\InvalidArgumentException $e) {
+                            $all_info[] = null;
+                            //$price_product = "Price not found!";
+                        }
+
+                        try { // check if theres any coupon, index 5 if no discount, index 6 if discount
+                            $all_info[] = $crawler->filter('span.couponLabelText')->text(); //actual price
+                            //$price_product = $crawler->filter('span.a-price.aok-align-center > .a-offscreen')->text();
+                        } catch (\InvalidArgumentException $e) {
+                            $all_info[] = null;
+                            //$price_product = "Price not found!";
+                        }
                             
                         return view("another", ['product_info' => $all_info]);
                     }

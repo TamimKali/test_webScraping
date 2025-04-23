@@ -11,15 +11,25 @@
         @if ($product_info[0] != null)
             <h1>Title: {{$product_info[0]}}</h1>
             @if ($product_info[1] != null)
-                <h1>Limited time offer</h1>
+                <h1>{{$product_info[1]}}</h1>
             @endif
             @if ($product_info[2] != null)
                 <h1>Discount: {{$product_info[2]}}</h1>
                 <h1>Original price: {{$product_info[3]}}</h1>
-                <h1>Price after discount: {{$product_info[4]}}</h1>
+                <h1>Current price: {{ $product_info[4] }} 
+                    @php echo floatval($product_info[3]) - floatval($product_info[4]); @endphp$ less</h1>
+                <img src="{{$product_info[5]}}" alt="{{$product_info[1]}}">
+                @if ($product_info[6] != null)
+                    <h1>{{$product_info[6]}}</h1>
+                @endif
             @else
                 <h1>Price: {{$product_info[3]}}</h1>
+                <img src="{{$product_info[4]}}" alt="{{$product_info[1]}}">
+                @if ($product_info[5] != null)
+                    <h1>{{$product_info[5]}}</h1>
+                @endif
             @endif
+            
         @else
             <h1>Make sure to put the entire link of the product!</h1>
         @endif
