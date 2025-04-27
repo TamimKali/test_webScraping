@@ -26,7 +26,6 @@ class WebScraper extends Controller
                 $client = new Client();
                 $parsedUrl = parse_url($url);
                 if(isset($parsedUrl['host']) && $parsedUrl['host'] != ''){
-                if(str_contains($parsedUrl['host'], 'amazon.it')){
                     $response = $client->request('GET', $url, [
                         'headers' => [
                             'User-Agent' => 'Mozilla/5.0', // Mimic browser
@@ -99,10 +98,6 @@ class WebScraper extends Controller
                     else {
                     return view("another", ['titles' => "Amazon confirmed!"]);
                     }
-                }
-                else{
-                    return view("another", ['titles' => "Put an amazoon linkkk"]);
-                }
                 }
                 else{
                     return view("another", ['titles' => "Put a urlllll"]);

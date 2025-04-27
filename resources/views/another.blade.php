@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
+    
+
     @if (isset($product_info))
         @if ($product_info[0] != null)
             <h1>Title: {{$product_info[0]}}</h1>
