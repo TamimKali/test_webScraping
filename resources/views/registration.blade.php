@@ -20,11 +20,17 @@
         @endif
     </head> 
     <body>
-       <div class="main_bg">
-        <form action="registration" class="main_form">
-            <label for="name">Nome</label>
-            <input type="text" name="username">
+       
+        <form method="POST" action="{{ route('registration') }}">
+            @csrf
+            <label>Name:</label><br>
+            <input type="text" name="name" value="{{ old('name') }}"><br><br>
+    
+            <label>Email:</label><br>
+            <input type="email" name="email" value="{{ old('email') }}"><br><br>
+    
+            <button type="submit">Send</button>
         </form>
-       </div>
+      
     </body>
 </html>

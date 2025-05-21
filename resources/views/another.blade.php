@@ -35,8 +35,8 @@
         @else
             <h1>Make sure to put the entire link of the product!</h1>
         @endif
-    @else
-        <h2>Title or price not found!</h2>
+    @else 
+        <h2>Title or price not found! {{$titles}}</h2>
     @endif
 </body>
 </html>
