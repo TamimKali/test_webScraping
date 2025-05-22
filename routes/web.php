@@ -18,3 +18,5 @@ Route::get('/scrape_data', [WebScraper::class, "getWebData"])->name("scrape_data
 Route::get("/another", function(){
     return view("another");
 })->name("another");
+
+Route::get("/test", [WebScraper::class, "authTest"])->name("testing_auth");

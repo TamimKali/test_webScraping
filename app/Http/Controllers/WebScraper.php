@@ -122,5 +122,35 @@ class WebScraper extends Controller
         return view('another', ["title_product" => "BROOOOO"]);
     }
 
+    public function authTest(){
+  
+$client = new Client();
+$response = $client->get("https://sentry2.quantumquote.it/auth/login/sentry/");
+$crawler = new Crawler((string) $response->getBody());
+$csrfToken = $crawler->filter('input[name=csrfmiddlewaretoken]')->attr("value");
+var_dump($csrfToken);
+$response = $client->post("https://sentry2.quantumquote.it/auth/login/sentry/",[
+    'form_params' => [
+        'csrfmiddlewaretoken' => $csrfToken,
+        'op' => 'login',
+        'username' => 'claudioscatoli@navert.it',
+        'password' => '19913050Ah+'
+    ],
+    'headers' => [
+        'Content-Type' => 'application/x-www-form-urlencoded',
+        "Host" => 'sentry2.quantumquote.it',
+        'Referer' => 'https://sentry2.quantumquote.it/auth/login/sentry/',
+        'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0',
+        'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    ]
+]);
+
+if($response->getStatusCode() != 302){
+    return view("/test", ["response" => null]);
+}
+
+return view("/test", ["response" => $response->getBody()]);
+    }
+
 
 }
