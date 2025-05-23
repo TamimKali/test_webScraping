@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GestioneAllianz;
 use App\Http\Controllers\registrationControll;
 use App\Http\Controllers\WebScraper;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +16,10 @@ Route::get('/registration', [registrationControll::class, "registration"])->name
 
 Route::get('/scrape', [WebScraper::class, "index"])->name("scrape");
 Route::get('/scrape_data', [WebScraper::class, "getWebData"])->name("scrape_data");
-Route::get("/another", function(){
+Route::get("/another", function () {
     return view("another");
 })->name("another");
 
 Route::get("/test", [WebScraper::class, "authTest"])->name("testing_auth");
+Route::get("/datiAssicurazione", [GestioneAllianz::class, "userLogin"])->name("datiAssicurazione");
+Route::get("/datiAssicurazione/{userCar}", [GestioneAllianz::class, "userLogin"])->name("userSearch");

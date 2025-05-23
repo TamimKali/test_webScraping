@@ -3,7 +3,10 @@ namespace App\Http\Controllers;
 
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\CookieJar;
+use GuzzleHttp\RequestOptions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
 use View;
 
@@ -118,12 +121,39 @@ class WebScraper extends Controller
 
     public function authTest()
     {
+        Http::globalOptions(['cookies' => new CookieJar(), 'headers' => [
+            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0',
+            'Accept'     => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        ]]);
 
-        $client    = new Client();
+        $username = "claudioscatoli@navert.it";
+        $password = "19913050Ah+";
+
+        $response = Http::get("https://sentry2.quantumquote.it/auth/login/sentry/");
+
+        $crawler              = new Crawler($response);
+        $csrf_token           = $crawler->filter('input[name=csrfmiddlewaretoken]')->attr('value');
+        $url_post_credenziali = $crawler->filter('#login form')->attr('action');
+        if ($url_post_credenziali === '') {
+            $url_post_credenziali = "https://sentry2.quantumquote.it/auth/login/sentry/";
+        }
+
+        $response_post = Http::asForm()->post($url_post_credenziali, [
+            'username'            => $username,
+            'password'            => $password,
+            'op'                  => 'login',
+            "csrfmiddlewaretoken" => $csrf_token,
+        ]);
+
+        die($response_post);
+
+        $client    = new Client([RequestOptions::COOKIES => true, RequestOptions::ALLOW_REDIRECTS => false]);
         $response  = $client->get("https://sentry2.quantumquote.it/auth/login/sentry/");
         $crawler   = new Crawler((string) $response->getBody());
         $csrfToken = $crawler->filter('input[name=csrfmiddlewaretoken]')->attr("value");
-        var_dump($csrfToken);
+        // var_dump($csrfToken);
+
+        // try {
         $response = $client->post("https://sentry2.quantumquote.it/auth/login/sentry/", [
             'form_params' => [
                 'csrfmiddlewaretoken' => $csrfToken,
@@ -133,18 +163,35 @@ class WebScraper extends Controller
             ],
             'headers'     => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
-                "Host"         => 'sentry2.quantumquote.it',
                 'Referer'      => 'https://sentry2.quantumquote.it/auth/login/sentry/',
                 'User-Agent'   => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:138.0) Gecko/20100101 Firefox/138.0',
                 'Accept'       => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             ],
         ]);
+        // } catch (Exception $exc) {
+        //     dd($exc);
+        // }
 
         if ($response->getStatusCode() != 302) {
             return view("/test", ["response" => null]);
         }
 
-        return view("/test", ["response" => $response->getBody()]);
+        return response($response->getStatusCode());
     }
 
+}
+
+class ProdottoAmazon
+{
+    public ?string $title;
+    public ?string $actual_price;
+    public ?string $limited_time_offer;
+    public ?string $discount_percentage;
+    public ?string $original_price;
+    public ?string $picture;
+    public ?string $coupon;
+
+    public function __construct()
+    {
+    }
 }
